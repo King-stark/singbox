@@ -8,8 +8,8 @@ on:
 jobs:
   build:
     name: Debug build
-#     runs-on: ubuntu-latest
-#     steps:
+     runs-on: ubuntu-latest
+     steps:
 #       - name: Cancel previous
 #         uses: styfle/cancel-workflow-action@0.7.0
 #         with:

@@ -6,8 +6,8 @@ on:
 
 
 jobs:
-  build:
-    name: Debug build
+#   build:
+#     name: Debug build
 #      runs-on: ubuntu-latest
 #      steps:
 #       - name: Cancel previous

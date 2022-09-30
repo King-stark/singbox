@@ -3,8 +3,8 @@
 The universal proxy platform.
 
 ## Documentation
-
-https://sing-box.sagernet.org
+> [Repo](https://github.com/SagerNet/sing-box)\
+> https://sing-box.sagernet.org
 
 ## License
 

@@ -150,7 +150,7 @@ jobs:
       - name: build
         id: build
         run: |
-          go test -v ./...
+          go install -v ./...
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:

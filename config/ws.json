@@ -38,29 +38,85 @@
         "type": "trojan",
         "tag": "trojan-in",
         "listen": "::",
-        "listen_port": 15678,
+        "listen_port": 443,
+        "tcp_fast_open": true,
+        "udp_fragment": true,
         "sniff": true,
         "sniff_override_destination": false,
         "proxy_protocol": true,
         "proxy_protocol_accept_no_header": false,
         "users": [
           {
-              "name": "sekai",
+              "name": "imtrojan",
               "password": "8JCsPssfgS8tiRwiMlhARg=="
           }
         ],
         "tls": {
             "enabled": true,
-            "server_name": "ca.fomo.gay",
+            "server_name": "servername.com",
             "alpn": [
-              "http/1.1"
+              "http/1.1",
+              "h2"
             ],
-            "certificate_path": "/etc/sing-box/acme/certificates/acme-v02.api.letsencrypt.org-directory/ca.fomo.gay/ca.fomo.gay.crt",
-            "key_path": "/etc/sing-box/acme/certificates/acme-v02.api.letsencrypt.org-directory/ca.fomo.gay/ca.fomo.gay.key"
+            "certificate_path": "",
+            "key_path": "",
+            "acme": {
+              "domain": [
+                "servername.com"
+              ],
+              "data_directory": "/etc/sing-box/acme",
+              "default_server_name": "",
+              "email": "king@email.com",
+              "provider": "zerossl",
+              "disable_http_challenge": false,
+              "disable_tls_alpn_challenge": false,
+              "alternative_http_port": 0,
+              "alternative_tls_port": 0,
+              "external_account": {
+                "key_id": "ogLdC1_SwljLqJtugGxJ_Q",
+                "mac_key": "Ep4_bFK52DD37JLLq0HMFlQlPSU81qnF92VcJXXTs0SCMf-ezXl0vfP4GUvhxiSAv-MrT7elalxoQv8JomK2aA"
+            }
+          }
+#        },
+#        "transport": {
+#            "type": "ws",
+#            "path": "/wstrojan",
+#            "max_early_data": 0,
+#            "early_data_header_name": "Sec-WebSocket-Protocol"
+        }
+    },
+
+    {
+        "type": "vmess",
+        "tag": "vmess-in",
+        "listen": "::",
+        "listen_port": 8080,
+        "tcp_fast_open": true,
+        "udp_fragment": true,
+        "sniff": true,
+        "sniff_override_destination": false,
+        "proxy_protocol": true,
+        "proxy_protocol_accept_no_header": false,
+        "users": [
+            {
+                "name": "king",
+                "uuid": "bf000d23-0752-40b4-affe-68f7707a9661",
+                "alterId": 0
+            }
+        ],
+        "tls": {
+            "enabled": false,
+            "server_name": "servername.com",
+            "alpn": [
+                "http/1.1",
+                "h2"
+            ],
+            "certificate_path": "/etc/sing-box/acme/certificates/acme-v02.api.letsencrypt.org-directory/servername.com/servername.com.crt",
+            "key_path": "/etc/sing-box/acme/certificates/acme-v02.api.letsencrypt.org-directory/servername.com/servername.com.key"
         },
         "transport": {
             "type": "ws",
-            "path": "/trojan-ws",
+            "path": "/wsvmess",
             "max_early_data": 0,
             "early_data_header_name": "Sec-WebSocket-Protocol"
         }
@@ -70,7 +126,7 @@
         "type": "naive",
         "tag": "naive-in",
         "listen": "::",
-        "listen_port": 15679,
+        "listen_port": 8443,
         "tcp_fast_open": true,
         "sniff": true,
         "sniff_override_destination": false,
@@ -84,9 +140,9 @@
         ],
         "tls": {
             "enabled": true,
-            "server_name": "ca.fomo.gay",
-            "certificate_path": "/etc/sing-box/acme/certificates/acme-v02.api.letsencrypt.org-directory/ca.fomo.gay/ca.fomo.gay.crt",
-            "key_path": "/etc/sing-box/acme/certificates/acme-v02.api.letsencrypt.org-directory/ca.fomo.gay/ca.fomo.gay.key"
+            "server_name": "servername.com",
+            "certificate_path": "/etc/sing-box/acme/certificates/acme-v02.api.letsencrypt.org-directory/servername.com/servername.com.crt",
+            "key_path": "/etc/sing-box/acme/certificates/acme-v02.api.letsencrypt.org-directory/servername.com/servername.com.key"
         }
     }
 
@@ -94,17 +150,7 @@
     "outbounds": [
         {
             "type": "direct",
-            "tag": "direct",
-            "domain_strategy": "prefer_ipv4"
-        },
-        {
-             "type": "direct",
-             "tag": "ipv6",
-             "domain_strategy": "prefer_ipv6"
-        },
-        {
-            "type": "block",
-            "tag": "block"
+            "tag": "direct"
         },
         {
             "type": "dns",
@@ -112,32 +158,10 @@
         }
     ],
     "route": {
-        "geoip": {
-            "path": "/etc/sing-box/geoip.db",
-            "download_url": "https://github.com/SagerNet/sing-geoip/releases/latest/download/geoip.db",
-            "download_detour": "direct"
-        },
-        "geosite": {
-            "path": "/etc/sing-box/geosite.db",
-            "download_url": "https://github.com/SagerNet/sing-geosite/releases/latest/download/geosite.db",
-            "download_detour": "direct"
-        },
         "rules": [
             {
                 "protocol": "dns",
                 "outbound": "dns-out"
-            },
-            {
-                "domain_keyword": [
-                    "ip.sb",
-                    "google",
-                    "youtube"
-                ],
-                "geosite": [
-                    "google",
-                    "youtube"
-                ],
-                "outbound": "ipv6"
             }
         ]
     }

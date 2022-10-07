@@ -149,7 +149,7 @@ jobs:
             goarch: arm64
 
       fail-fast: false
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     env:
       GOOS: ${{ matrix.goos }}
       GOARCH: ${{ matrix.goarch }}

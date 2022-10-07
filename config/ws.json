@@ -1,0 +1,144 @@
+{
+    "log": {
+        "disabled": false,
+        "level": "info",
+ #       "output": "/etc/sing-box/sing-box.log",
+        "timestamp": true
+    },
+    "dns": {
+        "servers": [
+            {
+                "tag": "google-tls",
+                "address": "tls://dns.google",
+                "address_resolver": "local",
+                "address_strategy": "prefer_ipv4",
+                "strategy": "prefer_ipv4",
+                "detour": "direct"
+            },
+            {
+                "tag": "google-udp",
+                "address": "8.8.8.8",
+                "address_strategy": "prefer_ipv4",
+                "strategy": "prefer_ipv4",
+                "detour": "direct"
+            },
+            {
+                "tag": "local",
+                "address": "local",
+                "detour": "direct"
+            }
+        ],
+        "strategy": "prefer_ipv4",
+        "disable_cache": false,
+        "disable_expire": false
+    },
+
+  "inbounds": [
+    {
+        "type": "trojan",
+        "tag": "trojan-in",
+        "listen": "::",
+        "listen_port": 15678,
+        "sniff": true,
+        "sniff_override_destination": false,
+        "proxy_protocol": true,
+        "proxy_protocol_accept_no_header": false,
+        "users": [
+          {
+              "name": "sekai",
+              "password": "8JCsPssfgS8tiRwiMlhARg=="
+          }
+        ],
+        "tls": {
+            "enabled": true,
+            "server_name": "ca.fomo.gay",
+            "alpn": [
+              "http/1.1"
+            ],
+            "certificate_path": "/etc/sing-box/acme/certificates/acme-v02.api.letsencrypt.org-directory/ca.fomo.gay/ca.fomo.gay.crt",
+            "key_path": "/etc/sing-box/acme/certificates/acme-v02.api.letsencrypt.org-directory/ca.fomo.gay/ca.fomo.gay.key"
+        },
+        "transport": {
+            "type": "ws",
+            "path": "/trojan-ws",
+            "max_early_data": 0,
+            "early_data_header_name": "Sec-WebSocket-Protocol"
+        }
+    },
+
+    {
+        "type": "naive",
+        "tag": "naive-in",
+        "listen": "::",
+        "listen_port": 15679,
+        "tcp_fast_open": true,
+        "sniff": true,
+        "sniff_override_destination": false,
+        "proxy_protocol": true,
+        "proxy_protocol_accept_no_header": false,
+        "users": [
+          {
+              "username": "imnaiveproxy",
+              "password": "8JCsPssfgS8tiRwiMlhARg=="
+          }
+        ],
+        "tls": {
+            "enabled": true,
+            "server_name": "ca.fomo.gay",
+            "certificate_path": "/etc/sing-box/acme/certificates/acme-v02.api.letsencrypt.org-directory/ca.fomo.gay/ca.fomo.gay.crt",
+            "key_path": "/etc/sing-box/acme/certificates/acme-v02.api.letsencrypt.org-directory/ca.fomo.gay/ca.fomo.gay.key"
+        }
+    }
+
+   ],
+    "outbounds": [
+        {
+            "type": "direct",
+            "tag": "direct",
+            "domain_strategy": "prefer_ipv4"
+        },
+        {
+             "type": "direct",
+             "tag": "ipv6",
+             "domain_strategy": "prefer_ipv6"
+        },
+        {
+            "type": "block",
+            "tag": "block"
+        },
+        {
+            "type": "dns",
+            "tag": "dns-out"
+        }
+    ],
+    "route": {
+        "geoip": {
+            "path": "/etc/sing-box/geoip.db",
+            "download_url": "https://github.com/SagerNet/sing-geoip/releases/latest/download/geoip.db",
+            "download_detour": "direct"
+        },
+        "geosite": {
+            "path": "/etc/sing-box/geosite.db",
+            "download_url": "https://github.com/SagerNet/sing-geosite/releases/latest/download/geosite.db",
+            "download_detour": "direct"
+        },
+        "rules": [
+            {
+                "protocol": "dns",
+                "outbound": "dns-out"
+            },
+            {
+                "domain_keyword": [
+                    "ip.sb",
+                    "google",
+                    "youtube"
+                ],
+                "geosite": [
+                    "google",
+                    "youtube"
+                ],
+                "outbound": "ipv6"
+            }
+        ]
+    }
+}

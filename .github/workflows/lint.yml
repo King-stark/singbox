@@ -3,11 +3,11 @@ name: Lint
 on:
   repository_dispatch:
   workflow_dispatch:
-  push:
-    paths-ignore:
-      - '**.md'
-      - '.github/**'
-      - '!.github/workflows/debug.yml'
+#   push:
+#     paths-ignore:
+#       - '**.md'
+#       - '.github/**'
+#       - '!.github/workflows/debug.yml'
 
 jobs:
   build:

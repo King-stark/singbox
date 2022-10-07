@@ -6,8 +6,6 @@ on:
 
 
 jobs:
-  build:
-
   cross:
     strategy:
       matrix:
@@ -110,8 +108,7 @@ jobs:
             goarch: arm64
 
       fail-fast: false
-      
-    name: Debug build
+    name: build
     runs-on: ubuntu-latest
     env:
       GOOS: ${{ matrix.goos }}
@@ -150,7 +147,8 @@ jobs:
           go get -v github.com/sagernet/sing-box@$version
           popd
         continue-on-error: true
-      - name: Run Build
+      - name: build
+        id: build
         run: |
           go test -v ./...
       - name: Upload artifact

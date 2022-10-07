@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    name: build
+
   cross:
     strategy:
       matrix:
@@ -110,6 +110,8 @@ jobs:
             goarch: arm64
 
       fail-fast: false
+      
+    name: Debug build
     runs-on: ubuntu-latest
     env:
       GOOS: ${{ matrix.goos }}

@@ -1,0 +1,105 @@
+{
+    "log": {
+        "disabled": false,
+        "level": "warn",
+        "output": "/root/sing-box.log",
+        "timestamp": true
+    },
+    "dns": {
+        "servers": [
+            {
+                "tag": "google-tls",
+                "address": "tls://dns.google",
+                "address_resolver": "local",
+                "address_strategy": "prefer_ipv4",
+                "strategy": "prefer_ipv4",
+                "detour": "direct"
+            },
+            {
+                "tag": "google-udp",
+                "address": "8.8.8.8",
+                "address_strategy": "prefer_ipv4",
+                "strategy": "prefer_ipv4",
+                "detour": "direct"
+            },
+            {
+                "tag": "local",
+                "address": "local",
+                "detour": "direct"
+            }
+        ],
+        "strategy": "prefer_ipv4",
+        "disable_cache": false,
+        "disable_expire": false
+    },
+
+  "inbounds": [
+    {
+        "type": "trojan",
+        "tag": "trojan-in",
+        "listen": "::",
+        "listen_port": 443,
+        "tcp_fast_open": true,
+        "udp_fragment": true,
+        "sniff": true,
+        "sniff_override_destination": false,
+        "proxy_protocol": false,
+        "proxy_protocol_accept_no_header": false,
+        "users": [
+          {
+              "name": "imtrojan",
+              "password": "8JCsPssfgS8tiRwiMlhARg=="
+          }
+        ],
+        "transport": {
+            "type": "ws",
+            "path": "/wstrojan",
+            "max_early_data": 0,
+            "early_data_header_name": "Sec-WebSocket-Protocol"
+        }
+    },
+    {
+        "type": "vmess",
+        "tag": "vmess-in",
+        "listen": "::",
+        "listen_port": 8080,
+        "tcp_fast_open": true,
+        "udp_fragment": true,
+        "sniff": true,
+        "sniff_override_destination": false,
+        "proxy_protocol": true,
+        "proxy_protocol_accept_no_header": false,
+        "users": [
+            {
+                "name": "king",
+                "uuid": "bf000d23-0752-40b4-affe-68f7707a9661",
+                "alterId": 0
+            }
+        ],
+        "transport": {
+            "type": "ws",
+            "path": "/wsvmess",
+            "max_early_data": 0,
+            "early_data_header_name": "Sec-WebSocket-Protocol"
+        }
+     }
+   ],
+    "outbounds": [
+        {
+            "type": "direct",
+            "tag": "direct"
+        },
+        {
+            "type": "dns",
+            "tag": "dns-out"
+        }
+    ],
+    "route": {
+        "rules": [
+            {
+                "protocol": "dns",
+                "outbound": "dns-out"
+            }
+        ]
+    }
+}

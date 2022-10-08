@@ -53,7 +53,7 @@
         ],
         "transport": {
             "type": "ws",
-            "path": "/wstrojan",
+            "path": "/8JCsPssfgS8tiRwiMlhARg==",
             "max_early_data": 0,
             "early_data_header_name": "Sec-WebSocket-Protocol"
         }
@@ -71,14 +71,14 @@
         "proxy_protocol_accept_no_header": false,
         "users": [
             {
-                "name": "king",
+                "name": "imvmess",
                 "uuid": "bf000d23-0752-40b4-affe-68f7707a9661",
                 "alterId": 0
             }
         ],
         "transport": {
             "type": "ws",
-            "path": "/wsvmess",
+            "path": "/bf000d23-0752-40b4-affe-68f7707a9661",
             "max_early_data": 0,
             "early_data_header_name": "Sec-WebSocket-Protocol"
         }

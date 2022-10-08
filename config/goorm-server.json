@@ -9,8 +9,7 @@
         "servers": [
             {
                 "tag": "google-tls",
-                "address": "tls://dns.google",
-                "address_resolver": "local",
+                "address": "tls://8.8.8.8",
                 "address_strategy": "prefer_ipv4",
                 "strategy": "prefer_ipv4",
                 "detour": "direct"
@@ -20,11 +19,6 @@
                 "address": "8.8.8.8",
                 "address_strategy": "prefer_ipv4",
                 "strategy": "prefer_ipv4",
-                "detour": "direct"
-            },
-            {
-                "tag": "local",
-                "address": "local",
                 "detour": "direct"
             }
         ],

@@ -11,7 +11,7 @@
         }
 }
 
-:88 { #http默认监听端口
+:80 { #http默认监听端口
 	redir https://{host}{uri} permanent #http自动跳转https，让网站看起来更真实。
 }
 

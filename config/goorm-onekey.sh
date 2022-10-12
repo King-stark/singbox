@@ -14,18 +14,20 @@ wget -c https://github.com/King-stark/singbox/raw/main/config/goorm-server.json 
 #运行singbox服务
 nohup ./singbox run -c config.json >/dev/null 2>&1 &
 
-# ~#测试 增加个web进程防止容器掉线~
+
+## !!! 好像以下都有点多此一举了。。。
+# !!! 选择`nginx`应用模版免除caddy
+#下载mikutap网页代码
+wget -c https://github.com/King-stark/singbox/raw/main/config/mikutap.tar.gz 
+tar -zxf mikutap.tar.gz -C /workspace/
+
+# #测试 增加个web进程防止容器掉线
 # #caddy运行 下载预编译库 https://github.com/lxhao61/integrated-examples.git
 # wget -c https:// pan.kodbox.ga/singbox/caddy.tar.gz
 # tar -zxf caddy.tar.gz && chmod +x ./caddy && rm caddy.tar.gz
 
-# #下载mikutap网页代码
-# wget -c https://github.com/King-stark/singbox/raw/main/config/mikutap.tar.gz
-# tar -zxf mikutap.tar.gz
-
 # #下载Caddyfile
 # wget -c https://github.com/King-stark/singbox/raw/main/config/Caddyfile
-
 
 #运行caddy服务
 ./caddy start

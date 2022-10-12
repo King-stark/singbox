@@ -29,5 +29,5 @@ tar -zxf mikutap.tar.gz -C /workspace/
 # #下载Caddyfile
 # wget -c https://github.com/King-stark/singbox/raw/main/config/Caddyfile
 
-#运行caddy服务
-./caddy start
+# #运行caddy服务
+# ./caddy start
